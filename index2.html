@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Asa的生日快乐祝福页面">
+    <title>🎂 HAPPY ASA DAY!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+    <style>
+        /* 基础重置 */
+        :root {
+            --primary-color: #ff4081;
+            --secondary-color: #ff6b6b;
+            --accent-color: #ff9a9e;
+            --text-shadow: 2px 2px 0 #fff, 
+                          3px 3px 5px rgba(0,0,0,0.2);
+            --box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: 'ZCOOL KuaiLe', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            background-color: #fff9fb;
+        }
+        
+        /* 背景图设置 - 移动端优化 */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .background-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+        }
+        
+        /* 标题样式 - 移动端优化 */
+        .header {
+            position: fixed;
+            top: 10px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            z-index: 10;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .fancy-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2rem, 8vw, 3rem);
+            margin: 0;
+            text-shadow: var(--text-shadow);
+            letter-spacing: 1px;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding: 0 10px;
+        }
+        
+        /* 移动端布局调整 */
+        .mobile-layout {
+            display: flex;
+            flex-direction: column;
+            padding-top: 70px; /* 给标题留出空间 */
+            padding-bottom: 80px; /* 给底部按钮留出空间 */
+        }
+        
+        /* 照片墙 - 移动端优化 */
+        .photo-gallery-container {
+            width: 100%;
+            padding: 10px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-bottom: 20px;
+        }
+        
+        .photo-gallery {
+            display: flex;
+            gap: 8px;
+            padding: 5px;
+            width: max-content;
+        }
+        
+        .photo-gallery img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        /* 轮播图 - 移动端优化 */
+        .film-container {
+            width: 95%;
+            margin: 10px auto;
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            background: white;
+        }
+        
+        .slideshow-container {
+            display: flex;
+            transition: transform 0.3s ease;
+            height: 50vh;
+            max-height: 300px;
+        }
+        
+        .slide {
+            min-width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+        
+        .slide img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 64, 129, 0.8);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+        
+        .carousel-prev {
+            left: 10px;
+        }
+        
+        .carousel-next {
+            right: 10px;
+        }
+        
+        /* 互动按钮 - 移动端优化 */
+        .interaction-buttons {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+            background: white;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 20;
+        }
+        
+        .mobile-button {
+            flex: 1;
+            margin: 0 5px;
+            padding: 10px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .mobile-button span {
+            font-size: 12px;
+            margin-top: 3px;
+        }
+        
+        /* 弹幕和留言面板 - 移动端优化 */
+        .panel {
+            position: fixed;
+            bottom: 70px;
+            right: 10px;
+            width: 90%;
+            max-width: 300px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: var(--box-shadow);
+            z-index: 30;
+            display: none;
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+        
+        .input-group {
+            display: flex;
+            margin-top: 10px;
+        }
+        
+        .input-group input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            margin-right: 5px;
+        }
+        
+        /* 音乐按钮 - 移动端优化 */
+        .music-btn {
+            position: fixed;
+            bottom: 70px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            z-index: 15;
+        }
+        
+        /* 特效优化 */
+        .heart {
+            position: fixed;
+            pointer-events: none;
+            z-index: 15;
+            animation: floatDown 3s linear forwards;
+            font-size: 24px;
+        }
+        
+        .click-rabbit {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            background: url('rabbit.png') center/contain no-repeat;
+            pointer-events: none;
+            z-index: 15;
+            animation: rabbitJump 1s ease-out forwards;
+        }
+        
+        /* 响应式调整 */
+        @media (min-width: 768px) {
+            .mobile-layout {
+                flex-direction: row;
+                padding-top: 80px;
+            }
+            
+            .photo-gallery-container {
+                width: 120px;
+                position: fixed;
+                left: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                height: 70vh;
+            }
+            
+            .photo-gallery {
+                flex-direction: column;
+                width: auto;
+            }
+            
+            .interaction-buttons {
+                width: auto;
+                right: 10px;
+                left: auto;
+                top: 50%;
+                transform: translateY(-50%);
+                flex-direction: column;
+                background: transparent;
+                box-shadow: none;
+            }
+            
+            .mobile-button {
+                margin: 5px 0;
+                width: 50px;
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景图容器 -->
+    <div class="background-container">
+        <img class="background-image" src="background.jpg" alt="背景图">
+    </div>
+    
+    <!-- 标题 -->
+    <header class="header" role="banner">
+        <h1 class="fancy-title" aria-label="Happy Asa Day">HAPPY ASA DAY</h1>
+    </header>
+
+    <!-- 移动端布局容器 -->
+    <div class="mobile-layout">
+        <!-- 照片墙 - 横向滚动 -->
+        <div class="photo-gallery-container">
+            <div class="photo-gallery">
+                <img src="photo1_thumb.jpg" alt="Asa的美好回忆1">
+                <img src="photo2_thumb.jpg" alt="Asa的美好回忆2">
+                <img src="photo3_thumb.jpg" alt="Asa的美好回忆3">
+                <img src="photo4_thumb.jpg" alt="Asa的美好回忆4">
+                <img src="photo5_thumb.jpg" alt="Asa的美好回忆5">
+                <img src="photo6_thumb.jpg" alt="Asa的美好回忆6">
+                <img src="photo7_thumb.jpg" alt="Asa的美好回忆7">
+                <img src="photo8_thumb.jpg" alt="Asa的美好回忆8">
+                <img src="photo9_thumb.jpg" alt="Asa的美好回忆9">
+                <img src="photo10_thumb.jpg" alt="Asa的美好回忆10">
+            </div>
+        </div>
+        
+        <!-- 胶片轮播图 -->
+        <section class="film-container" aria-label="精彩瞬间">
+            <div class="slideshow-container">
+                <!-- 轮播项将通过JS动态添加 -->
+            </div>
+            <button class="carousel-btn carousel-prev">❮</button>
+            <button class="carousel-btn carousel-next">❯</button>
+        </section>
+    </div>
+
+    <!-- 互动按钮 - 移动端底部固定 -->
+    <div class="interaction-buttons">
+        <button id="like-btn" class="mobile-button">❤️<br><span>点赞</span></button>
+        <button id="danmu-btn" class="mobile-button">🎆<br><span>弹幕</span></button>
+        <button id="chat-toggle" class="mobile-button">💬<br><span>留言</span></button>
+        <button id="drawing-btn" class="mobile-button">🎨<br><span>涂鸦</span></button>
+    </div>
+
+    <!-- 弹幕输入区域 -->
+    <div id="danmu-input-container" class="panel">
+        <div id="danmu-container"></div>
+        <div class="input-group">
+            <input type="text" id="danmu-input" placeholder="输入弹幕内容...">
+            <button id="danmu-send" class="mobile-button">发送</button>
+        </div>
+    </div>
+
+    <!-- 聊天室 -->
+    <div id="chat-box-container" class="panel">
+        <div id="chat-box"></div>
+        <div class="input-group">
+            <input type="text" id="chat-input" placeholder="输入消息">
+            <button id="chat-send" class="mobile-button">发送</button>
+        </div>
+    </div>
+
+    <!-- 音乐按钮 -->
+    <button class="music-btn">🎵</button>
+
+    <!-- 音乐播放器 -->
+    <audio id="music" loop>
+        <source src="birthday.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 1. 初始化轮播图
+            function initSlideshow() {
+                const images = [
+                    'slide1.jpg', 'slide2.jpg', 'slide3.jpg', 
+                    'slide4.jpg', 'slide5.jpg', 'slide6.jpg',
+                    'slide7.jpg', 'slide8.jpg', 'slide9.jpg',
+                    'slide10.jpg', 'slide11.jpg', 'slide12.jpg',
+                    'slide13.jpg', 'slide14.jpg', 'slide15.jpg',
+                    'slide16.jpg', 'slide17.jpg', 'slide18.jpg',
+                    'slide19.jpg'
+                ];
+                
+                const track = document.querySelector(".slideshow-container");
+                const prevBtn = document.querySelector(".carousel-prev");
+                const nextBtn = document.querySelector(".carousel-next");
+                let currentIndex = 1;
+                
+                // 创建轮播项
+                function createSlides() {
+                    // 克隆最后一张放到开头
+                    const lastClone = document.createElement('div');
+                    lastClone.className = 'slide';
+                    lastClone.innerHTML = `<img src="${images[images.length-1]}" alt="轮播图">`;
+                    track.appendChild(lastClone);
+                    
+                    // 添加所有真实图片
+                    images.forEach(img => {
+                        const slide = document.createElement('div');
+                        slide.className = 'slide';
+                        slide.innerHTML = `<img src="${img}" alt="轮播图">`;
+                        track.appendChild(slide);
+                    });
+                    
+                    // 克隆第一张放到最后
+                    const firstClone = document.createElement('div');
+                    firstClone.className = 'slide';
+                    firstClone.innerHTML = `<img src="${images[0]}" alt="轮播图">`;
+                    track.appendChild(firstClone);
+                }
+                
+                function goToSlide(index) {
+                    currentIndex = index;
+                    track.style.transform = `translateX(-${currentIndex * 100}%)`;
+                }
+                
+                function showNextSlide() {
+                    currentIndex++;
+                    track.style.transition = "transform 0.3s ease";
+                    goToSlide(currentIndex);
+                }
+                
+                function showPrevSlide() {
+                    currentIndex--;
+                    track.style.transition = "transform 0.3s ease";
+                    goToSlide(currentIndex);
+                }
+                
+                // 初始化
+                createSlides();
+                goToSlide(1);
+                
+                // 无缝连接处理
+                track.addEventListener('transitionend', () => {
+                    if (currentIndex === 0) {
+                        track.style.transition = 'none';
+                        currentIndex = track.children.length - 2;
+                        goToSlide(currentIndex);
+                    } else if (currentIndex === track.children.length - 1) {
+                        track.style.transition = 'none';
+                        currentIndex = 1;
+                        goToSlide(currentIndex);
+                    }
+                });
+                
+                // 添加事件监听
+                prevBtn.addEventListener('click', showPrevSlide);
+                nextBtn.addEventListener('click', showNextSlide);
+                
+                // 触摸滑动支持
+                let startX = 0;
+                let isSwiping = false;
+                
+                track.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                    isSwiping = true;
+                    track.style.transition = 'none';
+                });
+                
+                track.addEventListener('touchmove', (e) => {
+                    if (!isSwiping) return;
+                    const x = e.touches[0].clientX;
+                    const diff = startX - x;
+                    track.style.transform = `translateX(calc(-${currentIndex * 100}% - ${diff}px))`;
+                });
+                
+                track.addEventListener('touchend', (e) => {
+                    if (!isSwiping) return;
+                    isSwiping = false;
+                    
+                    const endX = e.changedTouches[0].clientX;
+                    const diff = startX - endX;
+                    
+                    if (diff > 50) {
+                        showNextSlide();
+                    } else if (diff < -50) {
+                        showPrevSlide();
+                    } else {
+                        track.style.transition = 'transform 0.3s ease';
+                        goToSlide(currentIndex);
+                    }
+                });
+            }
+            
+            // 2. 初始化互动功能
+            function initInteractions() {
+                // 点赞功能
+                let likeCount = 0;
+                document.getElementById("like-btn").addEventListener("click", function() {
+                    likeCount++;
+                    
+                    // 爱心特效
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.innerHTML = '❤️';
+                    heart.style.left = Math.random() * window.innerWidth + 'px';
+                    heart.style.top = '0';
+                    heart.style.color = `hsl(${Math.random() * 60 + 330}, 100%, 70%)`;
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => heart.remove(), 3000);
+                });
+                
+                // 弹幕功能
+                document.getElementById("danmu-btn").addEventListener("click", function() {
+                    const container = document.getElementById("danmu-input-container");
+                    container.style.display = container.style.display === "none" ? "block" : "none";
+                    document.getElementById("chat-box-container").style.display = "none";
+                });
+                
+                document.getElementById("danmu-send").addEventListener("click", sendDanmu);
+                document.getElementById("danmu-input").addEventListener("keypress", function(e) {
+                    if (e.key === 'Enter') sendDanmu();
+                });
+                
+                // 聊天室
+                document.getElementById("chat-toggle").addEventListener("click", function() {
+                    const chat = document.getElementById("chat-box-container");
+                    chat.style.display = chat.style.display === "none" ? "block" : "none";
+                    document.getElementById("danmu-input-container").style.display = "none";
+                });
+                
+                document.getElementById("chat-send").addEventListener("click", function() {
+                    const input = document.getElementById("chat-input");
+                    const text = input.value.trim();
+                    if (!text) return;
+                    
+                    addMessageToContainer("chat-box", text);
+                    input.value = "";
+                });
+                
+                // 音乐控制
+                const music = document.getElementById('music');
+                const musicBtn = document.querySelector('.music-btn');
+                let isMusicPlaying = false;
+                
+                function unlockAudio() {
+                    music.volume = 0.3;
+                    document.body.removeEventListener('click', unlockAudio);
+                }
+                
+                document.body.addEventListener('click', unlockAudio, { once: true });
+                
+                musicBtn.addEventListener('click', function() {
+                    if (isMusicPlaying) {
+                        music.pause();
+                        musicBtn.textContent = '🎵';
+                    } else {
+                        music.play()
+                            .then(() => {
+                                isMusicPlaying = true;
+                                musicBtn.textContent = '🔊';
+                            })
+                            .catch(error => {
+                                console.error('播放失败:', error);
+                            });
+                    }
+                    isMusicPlaying = !isMusicPlaying;
+                });
+                
+                // 照片点击放大
+                document.querySelectorAll('.photo-gallery img').forEach(img => {
+                    img.addEventListener('click', function() {
+                        // 这里可以添加图片放大预览功能
+                        alert('点击了照片: ' + this.alt);
+                    });
+                });
+            }
+            
+            // 辅助函数
+            function sendDanmu() {
+                const input = document.getElementById("danmu-input");
+                const text = input.value.trim();
+                if (!text) return;
+                
+                createDanmu(text);
+                addMessageToContainer("danmu-container", text);
+                input.value = "";
+            }
+            
+            function createDanmu(text) {
+                const danmu = document.createElement('div');
+                danmu.className = 'danmu-item';
+                danmu.textContent = text;
+                danmu.style.top = Math.random() * (window.innerHeight - 100) + 50 + 'px';
+                danmu.style.color = `hsl(${Math.random() * 360}, 100%, 70%)`;
+                document.body.appendChild(danmu);
+                
+                setTimeout(() => danmu.remove(), 10000);
+            }
+            
+            function addMessageToContainer(containerId, text) {
+                const container = document.getElementById(containerId);
+                const message = document.createElement('div');
+                message.textContent = text;
+                message.style.padding = '5px 0';
+                container.appendChild(message);
+                container.scrollTop = container.scrollHeight;
+            }
+            
+            // 初始化所有功能
+            initSlideshow();
+            initInteractions();
+        });
+    </script>
+</body>
+</html>
